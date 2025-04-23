@@ -36,9 +36,9 @@ export default function Layout({ children, currentPageName }) {
     }
 
     // Only check admin access if trying to access admin pages
-    if (isAdminPage && !isAdmin && !isLoginPage) {
-      navigate(createPageUrl('AdminLogin'));
-    }
+   // if (isAdminPage && !isAdmin && !isLoginPage) {
+   //   navigate(createPageUrl('AdminLogin'));
+   // }
   }, [location.pathname]);
 
   const handleLogout = () => {
