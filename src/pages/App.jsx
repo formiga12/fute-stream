@@ -5,16 +5,11 @@ import Layout from '../layout';
 // Páginas públicas
 import HomePage from './Home';
 import WatchPage from './Watch';
-import AdminLoginPage from './AdminLogin';
-import AdminDashboardPage from './AdminDashboard';
-import ManageBannersPage from './ManageBanners';
-import ManageCustomersPage from './ManageCustomers';
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Rotas Públicas */}
         <Route 
           path="/" 
           element={
@@ -30,40 +25,6 @@ export default function App() {
               <WatchPage />
             </Layout>
           } 
-        />
-
-        {/* Rotas Administrativas */}
-        <Route 
-          path="/admin/login" 
-          element={
-            <Layout currentPageName="AdminLogin">
-              <AdminLoginPage />
-            </Layout>
-          } 
-        />
-        <Route
-          path="/admin/dashboard"
-          element={
-            <Layout currentPageName="AdminDashboard">
-              <AdminDashboardPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/banners"
-          element={
-            <Layout currentPageName="ManageBanners">
-              <ManageBannersPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/customers"
-          element={
-            <Layout currentPageName="ManageCustomers">
-              <ManageCustomersPage />
-            </Layout>
-          }
         />
 
         {/* Rota para páginas não encontradas */}
