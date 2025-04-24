@@ -1,7 +1,5 @@
 import Layout from "./Layout.jsx";
 
-import Admin from "./Admin";
-
 import Home from "./Home";
 
 import Watch from "./Watch";
@@ -21,8 +19,6 @@ import UserProfile from "./UserProfile";
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
-    
-    Admin: Admin,
     
     Home: Home,
     
@@ -64,10 +60,8 @@ function PagesContent() {
         <Layout currentPageName={currentPage}>
             <Routes>            
                 
-                    <Route path="/" element={<Admin />} />
+                    <Route path="/" element={<Home />} />
                 
-                
-                <Route path="/Admin" element={<Admin />} />
                 
                 <Route path="/Home" element={<Home />} />
                 
