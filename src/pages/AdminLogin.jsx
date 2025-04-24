@@ -8,17 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 export default function AdminLoginPage() {
+  // Removed admin auth check to prevent redirects
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // Se já estiver autenticado, redireciona para o dashboard
-    if (localStorage.getItem('adminAuthenticated') === 'true') {
-      navigate(createPageUrl('AdminDashboard'));
-    }
-  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +23,7 @@ export default function AdminLoginPage() {
       // Simulação de autenticação
       if (credentials.username === 'admin' && credentials.password === 'admin123') {
         localStorage.setItem('adminAuthenticated', 'true');
-        navigate(createPageUrl('AdminDashboard'));
+        navigate('/');
       } else {
         setError('Usuário ou senha incorretos');
       }
@@ -112,7 +106,7 @@ export default function AdminLoginPage() {
           <Button
             variant="link"
             className="text-gray-500 hover:text-gray-700"
-            onClick={() => navigate(createPageUrl('Home'))}
+            onClick={() => navigate('/')}
           >
             Voltar para página inicial
           </Button>
