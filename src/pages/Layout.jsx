@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -20,26 +21,19 @@ export default function Layout({ children, currentPageName }) {
   
   // Define which pages are public
   const publicPages = ['Home', 'Watch'];
-  const isPublicPage = currentPageName && publicPages.includes(currentPageName);
-  
-  // Define admin pages
   const adminPages = ['Admin', 'AdminDashboard', 'ManageBanners', 'ManageCustomers'];
-  const isAdminPage = currentPageName && adminPages.includes(currentPageName);
+  
+  const isPublicPage = publicPages.includes(currentPageName);
+  const isAdminPage = adminPages.includes(currentPageName);
   const isLoginPage = currentPageName === 'AdminLogin';
   const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
 
   useEffect(() => {
-    // If at root, redirect to Home
-    if (!currentPageName || location.pathname === '/' || location.pathname === '') {
+    // Se estiver na raiz, redireciona para Home apenas se não for uma página administrativa
+    if (!currentPageName && !isAdminPage) {
       navigate(createPageUrl('Home'));
-      return;
     }
-
-    // Only check admin access if trying to access admin pages
-    if (isAdminPage && !isAdmin && !isLoginPage) {
-      navigate(createPageUrl('AdminLogin'));
-    }
-  }, [location.pathname, currentPageName]);
+  }, [currentPageName, navigate, isAdminPage]);
 
   // Login page has no layout
   if (isLoginPage) {
@@ -193,9 +187,10 @@ export default function Layout({ children, currentPageName }) {
         </div>
       </nav>
       
-      <main>
+      <main className="container mx-auto px-4 py-8">
         {children}
       </main>
     </div>
   );
 }
+
