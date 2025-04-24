@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -156,14 +157,6 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl("Home")} className="font-bold text-xl">
               Streaming Plus
             </Link>
-            {isAdmin && (
-              <Link 
-                to={createPageUrl("AdminDashboard")}
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Área Administrativa
-              </Link>
-            )}
           </div>
         </div>
       </nav>
@@ -174,3 +167,4 @@ export default function Layout({ children, currentPageName }) {
     </div>
   );
 }
+
