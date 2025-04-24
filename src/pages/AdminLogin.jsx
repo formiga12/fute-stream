@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
     if (credentials.username === 'admin' && credentials.password === 'admin123') {
       // Store admin session
       localStorage.setItem('adminAuthenticated', 'true');
-      navigate(createPageUrl('Admin'));
+      navigate(createPageUrl('AdminDashboard'));
     } else {
       setError('Usuário ou senha incorretos');
     }
