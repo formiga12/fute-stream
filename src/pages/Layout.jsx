@@ -20,31 +20,26 @@ export default function Layout({ children, currentPageName }) {
   
   // Define which pages are public
   const publicPages = ['Home', 'Watch'];
-  const isPublicPage = publicPages.includes(currentPageName);
+  const isPublicPage = currentPageName && publicPages.includes(currentPageName);
   
   // Define admin pages
   const adminPages = ['Admin', 'AdminDashboard', 'ManageBanners', 'ManageCustomers'];
-  const isAdminPage = adminPages.includes(currentPageName);
+  const isAdminPage = currentPageName && adminPages.includes(currentPageName);
   const isLoginPage = currentPageName === 'AdminLogin';
   const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
 
   useEffect(() => {
     // If at root, redirect to Home
-    if (location.pathname === '/' || location.pathname === '') {
+    if (!currentPageName || location.pathname === '/' || location.pathname === '') {
       navigate(createPageUrl('Home'));
       return;
     }
 
     // Only check admin access if trying to access admin pages
-   // if (isAdminPage && !isAdmin && !isLoginPage) {
-   //   navigate(createPageUrl('AdminLogin'));
-   // }
-  }, [location.pathname]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuthenticated');
-    navigate(createPageUrl("Home"));
-  };
+    if (isAdminPage && !isAdmin && !isLoginPage) {
+      navigate(createPageUrl('AdminLogin'));
+    }
+  }, [location.pathname, currentPageName]);
 
   // Login page has no layout
   if (isLoginPage) {
@@ -133,7 +128,10 @@ export default function Layout({ children, currentPageName }) {
             {/* Logout Button */}
             <div className="px-3 py-4 border-t border-gray-200">
               <button
-                onClick={handleLogout}
+                onClick={() => {
+                  localStorage.removeItem('adminAuthenticated');
+                  navigate(createPageUrl("Home"));
+                }}
                 className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-150 ease-in-out"
               >
                 <LogOut className="w-5 h-5" />
@@ -183,6 +181,14 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl("Home")} className="font-bold text-xl">
               Streaming Plus
             </Link>
+            {isAdmin && (
+              <Link 
+                to={createPageUrl("AdminDashboard")}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                Área Administrativa
+              </Link>
+            )}
           </div>
         </div>
       </nav>
