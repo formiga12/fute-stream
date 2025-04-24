@@ -17,10 +17,10 @@ export default function Layout({ children, currentPageName }) {
   const [isAdminSidebarOpen, setIsAdminSidebarOpen] = useState(false);
   
   // Define which pages use admin layout
-  const adminPages = ['AdminDashboard', 'ManageBanners', 'ManageCustomers'];
-  const isAdminPage = adminPages.includes(currentPageName);
-  const isLoginPage = currentPageName === 'AdminLogin';
-  const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
+ // const adminPages = ['AdminDashboard', 'ManageBanners', 'ManageCustomers'];
+ // const isAdminPage = adminPages.includes(currentPageName);
+ // const isLoginPage = currentPageName === 'AdminLogin';
+  //const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
 
   // Login page has no layout
   if (isLoginPage) {
