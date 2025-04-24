@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { StreamBanner } from '@/api/entities';
 import { Card } from '@/components/ui/card';
@@ -16,15 +17,18 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
 
 export default function AdminPage() {
-  // Add authentication check
+  const navigate = useNavigate();
+
   useEffect(() => {
     const adminAuthenticated = localStorage.getItem('adminAuthenticated');
     if (adminAuthenticated !== 'true') {
-      window.location.href = "/AdminLogin";
+      navigate(createPageUrl("AdminLogin"));
     }
-  }, []);
+  }, [navigate]);
 
   const [banners, setBanners] = useState([]);
   const [newBanner, setNewBanner] = useState({
