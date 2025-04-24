@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { StreamBanner } from '@/api/entities';
 import { Card } from '@/components/ui/card';
@@ -22,6 +23,7 @@ export default function HomePage() {
     try {
       const now = new Date().toISOString();
       const data = await StreamBanner.list();
+      // Remover qualquer verificação de autenticação aqui
       const activeBanners = data.filter(banner => {
         try {
           return banner.active && 
@@ -33,7 +35,6 @@ export default function HomePage() {
         }
       });
 
-      // Separar banners por tipo
       const freeBanners = activeBanners.filter(banner => banner.price === 0);
       const paidBanners = activeBanners.filter(banner => banner.price > 0);
 
