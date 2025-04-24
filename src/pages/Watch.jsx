@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { StreamBanner } from '@/api/entities';
 import { Card } from '@/components/ui/card';
@@ -31,7 +32,7 @@ export default function WatchPage() {
     }
     
     if (bannerId) {
-      const data = await StreamBanner.list();
+      const data = await StreamBanner.list(undefined, undefined, { publicRead: true });
       const found = data.find(b => b.id === bannerId);
       if (found) {
         setBanner(found);
