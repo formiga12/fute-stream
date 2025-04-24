@@ -5,7 +5,6 @@ import { createPageUrl } from '@/utils';
 import { 
   Home, 
   LayoutDashboard,
-  FilePlus, 
   Users,
   LogOut,
   Menu as MenuIcon,
@@ -17,7 +16,7 @@ export default function Layout({ children, currentPageName }) {
   const [isAdminSidebarOpen, setIsAdminSidebarOpen] = useState(false);
   
   // Define which pages use admin layout
-  const adminPages = ['Admin', 'AdminDashboard', 'ManageBanners', 'ManageCustomers'];
+  const adminPages = ['AdminDashboard', 'ManageBanners', 'ManageCustomers'];
   const isAdminPage = adminPages.includes(currentPageName);
   const isLoginPage = currentPageName === 'AdminLogin';
   const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
@@ -65,12 +64,7 @@ export default function Layout({ children, currentPageName }) {
                   path: "AdminDashboard",
                 },
                 {
-                  title: "Criar Banner",
-                  icon: <FilePlus className="w-5 h-5" />,
-                  path: "Admin",
-                },
-                {
-                  title: "Gerenciar Banners",
+                  title: "Gerenciar Transmissões",
                   icon: <List className="w-5 h-5" />,
                   path: "ManageBanners",
                 },
