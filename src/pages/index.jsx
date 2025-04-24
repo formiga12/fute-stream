@@ -16,6 +16,8 @@ import ManageCustomers from "./ManageCustomers";
 
 import App from "./App";
 
+import UserProfile from "./UserProfile";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
@@ -35,6 +37,8 @@ const PAGES = {
     ManageCustomers: ManageCustomers,
     
     App: App,
+    
+    UserProfile: UserProfile,
     
 }
 
@@ -78,6 +82,8 @@ function PagesContent() {
                 <Route path="/ManageCustomers" element={<ManageCustomers />} />
                 
                 <Route path="/App" element={<App />} />
+                
+                <Route path="/UserProfile" element={<UserProfile />} />
                 
             </Routes>
         </Layout>
