@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StreamBanner } from '@/api/entities';
 import { Card } from '@/components/ui/card';
@@ -69,9 +68,9 @@ export default function ManageBannersPage() {
   useEffect(() => {
     const adminAuthenticated = localStorage.getItem('adminAuthenticated');
     if (adminAuthenticated !== 'true') {
-      window.location.href = createPageUrl("AdminLogin");
+      navigate(createPageUrl('AdminLogin'));
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     loadBanners();
@@ -371,17 +370,6 @@ export default function ManageBannersPage() {
                           }
                         }}
                       />
-                      <Input
-                        type="time"
-                        className="m-2"
-                        onChange={(e) => {
-                          const [hours, minutes] = e.target.value.split(':');
-                          const date = new Date(newBanner.start_date || new Date());
-                          date.setHours(parseInt(hours));
-                          date.setMinutes(parseInt(minutes));
-                          setNewBanner({ ...newBanner, start_date: date.toISOString() });
-                        }}
-                      />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -404,10 +392,14 @@ export default function ManageBannersPage() {
                         onSelect={(date) => {
                           if (date) {
                             const datetime = new Date(date);
-                            datetime.setHours(23);
-                            datetime.setMinutes(59);
+                            datetime.setHours(new Date().getHours() + 2);
+                            datetime.setMinutes(new Date().getMinutes());
                             setNewBanner({ ...newBanner, expiration_date: datetime.toISOString() });
                           }
+                        }}
+                        disabled={(date) => {
+                          if (!newBanner.start_date) return false;
+                          return date < new Date(newBanner.start_date);
                         }}
                       />
                     </PopoverContent>
@@ -416,45 +408,56 @@ export default function ManageBannersPage() {
               </div>
 
               <div>
-                <Label>Imagem de Prévia</Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                  className="mt-1"
-                />
+                <Label>Thumbnail</Label>
+                <div className="mt-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-md file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-blue-50 file:text-blue-700
+                      hover:file:bg-blue-100"
+                  />
+                </div>
+                {newBanner.thumbnail && (
+                  <div className="mt-4">
+                    <img 
+                      src={newBanner.thumbnail} 
+                      alt="Thumbnail preview" 
+                      className="h-40 w-auto object-cover rounded-md"
+                    />
+                  </div>
+                )}
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-2 pt-4">
                 <Switch
+                  id="active-switch"
                   checked={newBanner.active}
                   onCheckedChange={(checked) => setNewBanner({ ...newBanner, active: checked })}
                 />
-                <Label>Ativo</Label>
+                <Label htmlFor="active-switch">Ativar transmissão</Label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="pt-4">
                 <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => setActiveTab("list")}
+                  type="submit" 
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  disabled={isSubmitting}
                 >
-                  Cancelar
-                </Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700" disabled={isSubmitting}>
                   {isSubmitting ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processando...
-                    </span>
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Criando...</span>
+                    </div>
                   ) : (
-                    <>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Criar Banner
-                    </>
+                    <div className="flex items-center justify-center gap-2">
+                      <Plus className="w-4 h-4" />
+                      <span>Criar Transmissão</span>
+                    </div>
                   )}
                 </Button>
               </div>
@@ -463,19 +466,20 @@ export default function ManageBannersPage() {
         </TabsContent>
       </Tabs>
 
+      {/* Modals */}
       {editingBanner && (
         <EditBannerModal
           banner={editingBanner}
-          onSave={handleEdit}
           onClose={() => setEditingBanner(null)}
+          onSave={handleEdit}
         />
       )}
-
+      
       {deletingBanner && (
         <DeleteBannerModal
           banner={deletingBanner}
-          onConfirm={() => handleDelete(deletingBanner.id)}
           onClose={() => setDeletingBanner(null)}
+          onConfirm={() => handleDelete(deletingBanner.id)}
         />
       )}
     </div>
