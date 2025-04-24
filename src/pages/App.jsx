@@ -1,13 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../layout';
-import PrivateRoute from '../components/auth/PrivateRoute';
 
 // Páginas públicas
 import HomePage from './Home';
 import WatchPage from './Watch';
-
-// Páginas administrativas
 import AdminLoginPage from './AdminLogin';
 import AdminDashboardPage from './AdminDashboard';
 import AdminPage from './Admin';
@@ -36,7 +33,7 @@ export default function App() {
           } 
         />
 
-        {/* Rota de Login */}
+        {/* Rotas Administrativas */}
         <Route 
           path="/admin/login" 
           element={
@@ -45,46 +42,36 @@ export default function App() {
             </Layout>
           } 
         />
-
-        {/* Rotas Protegidas */}
         <Route
           path="/admin"
           element={
-            <PrivateRoute>
-              <Layout currentPageName="Admin">
-                <AdminPage />
-              </Layout>
-            </PrivateRoute>
+            <Layout currentPageName="Admin">
+              <AdminPage />
+            </Layout>
           }
         />
         <Route
           path="/admin/dashboard"
           element={
-            <PrivateRoute>
-              <Layout currentPageName="AdminDashboard">
-                <AdminDashboardPage />
-              </Layout>
-            </PrivateRoute>
+            <Layout currentPageName="AdminDashboard">
+              <AdminDashboardPage />
+            </Layout>
           }
         />
         <Route
           path="/admin/banners"
           element={
-            <PrivateRoute>
-              <Layout currentPageName="ManageBanners">
-                <ManageBannersPage />
-              </Layout>
-            </PrivateRoute>
+            <Layout currentPageName="ManageBanners">
+              <ManageBannersPage />
+            </Layout>
           }
         />
         <Route
           path="/admin/customers"
           element={
-            <PrivateRoute>
-              <Layout currentPageName="ManageCustomers">
-                <ManageCustomersPage />
-              </Layout>
-            </PrivateRoute>
+            <Layout currentPageName="ManageCustomers">
+              <ManageCustomersPage />
+            </Layout>
           }
         />
 
