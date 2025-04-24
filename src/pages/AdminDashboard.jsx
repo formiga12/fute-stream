@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StreamBanner } from '@/api/entities';
 import { Purchase } from '@/api/entities';
