@@ -14,6 +14,8 @@ import AdminDashboard from "./AdminDashboard";
 
 import ManageCustomers from "./ManageCustomers";
 
+import App from "./App";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
@@ -31,6 +33,8 @@ const PAGES = {
     AdminDashboard: AdminDashboard,
     
     ManageCustomers: ManageCustomers,
+    
+    App: App,
     
 }
 
@@ -72,6 +76,8 @@ function PagesContent() {
                 <Route path="/AdminDashboard" element={<AdminDashboard />} />
                 
                 <Route path="/ManageCustomers" element={<ManageCustomers />} />
+                
+                <Route path="/App" element={<App />} />
                 
             </Routes>
         </Layout>
