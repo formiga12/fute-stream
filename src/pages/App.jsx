@@ -7,7 +7,6 @@ import HomePage from './Home';
 import WatchPage from './Watch';
 import AdminLoginPage from './AdminLogin';
 import AdminDashboardPage from './AdminDashboard';
-import AdminPage from './Admin';
 import ManageBannersPage from './ManageBanners';
 import ManageCustomersPage from './ManageCustomers';
 
@@ -41,14 +40,6 @@ export default function App() {
               <AdminLoginPage />
             </Layout>
           } 
-        />
-        <Route
-          path="/admin"
-          element={
-            <Layout currentPageName="Admin">
-              <AdminPage />
-            </Layout>
-          }
         />
         <Route
           path="/admin/dashboard"
