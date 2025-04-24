@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Play, Timer, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import EmailCollectionModal from '../components/auth/EmailCollectionModal';
 
 export default function HomePage() {
@@ -52,14 +51,14 @@ export default function HomePage() {
 
   const handleEmailSubmit = (email) => {
     if (selectedBanner) {
-      navigate(createPageUrl('Watch') + `?id=${selectedBanner.id}&email=${encodeURIComponent(email)}`);
+      navigate(`/watch?id=${selectedBanner.id}&email=${encodeURIComponent(email)}`);
     }
     setShowEmailModal(false);
   };
 
   const handleBannerClick = (banner) => {
     if (banner.price === 0) {
-      navigate(createPageUrl('Watch') + `?id=${banner.id}&free=true`);
+      navigate(`/watch?id=${banner.id}&free=true`);
     } else {
       setSelectedBanner(banner);
       setShowEmailModal(true);
