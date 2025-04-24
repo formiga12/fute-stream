@@ -1,7 +1,6 @@
 
-
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { 
   Home, 
@@ -16,24 +15,12 @@ import {
 
 export default function Layout({ children, currentPageName }) {
   const [isAdminSidebarOpen, setIsAdminSidebarOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
   
-  // Define which pages are public
-  const publicPages = ['Home', 'Watch'];
+  // Define which pages use admin layout
   const adminPages = ['Admin', 'AdminDashboard', 'ManageBanners', 'ManageCustomers'];
-  
-  const isPublicPage = publicPages.includes(currentPageName);
   const isAdminPage = adminPages.includes(currentPageName);
   const isLoginPage = currentPageName === 'AdminLogin';
   const isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
-
-  useEffect(() => {
-    // Se estiver na raiz, redireciona para Home apenas se não for uma página administrativa
-    if (!currentPageName && !isAdminPage) {
-      navigate(createPageUrl('Home'));
-    }
-  }, [currentPageName, navigate, isAdminPage]);
 
   // Login page has no layout
   if (isLoginPage) {
@@ -124,7 +111,7 @@ export default function Layout({ children, currentPageName }) {
               <button
                 onClick={() => {
                   localStorage.removeItem('adminAuthenticated');
-                  navigate(createPageUrl("Home"));
+                  window.location.href = createPageUrl("Home");
                 }}
                 className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-150 ease-in-out"
               >
@@ -193,4 +180,3 @@ export default function Layout({ children, currentPageName }) {
     </div>
   );
 }
-
