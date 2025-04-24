@@ -131,7 +131,7 @@ export default function Layout({ children, currentPageName }) {
           padding-left: 1em;
         }
         ul li::before {
-          content: "–";
+          content: "-";
           position: absolute;
           left: 0;
         }
