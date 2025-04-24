@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -8,28 +9,37 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 export default function AdminLoginPage() {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Se já estiver autenticado, redireciona para o dashboard
+    if (localStorage.getItem('adminAuthenticated') === 'true') {
+      navigate(createPageUrl('AdminDashboard'));
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    if (credentials.username === 'admin' && credentials.password === 'admin123') {
-      // Store admin session
-      localStorage.setItem('adminAuthenticated', 'true');
-      navigate(createPageUrl('AdminDashboard'));
-    } else {
-      setError('Usuário ou senha incorretos');
+    try {
+      // Simulação de autenticação
+      if (credentials.username === 'admin' && credentials.password === 'admin123') {
+        localStorage.setItem('adminAuthenticated', 'true');
+        navigate(createPageUrl('AdminDashboard'));
+      } else {
+        setError('Usuário ou senha incorretos');
+      }
+    } catch (error) {
+      console.error('Erro na autenticação:', error);
+      setError('Erro ao fazer login. Tente novamente.');
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
