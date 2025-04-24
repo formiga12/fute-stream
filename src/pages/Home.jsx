@@ -22,8 +22,7 @@ export default function HomePage() {
   const loadBanners = async () => {
     try {
       const now = new Date().toISOString();
-      const data = await StreamBanner.list();
-      // Remover qualquer verificação de autenticação aqui
+      const data = await StreamBanner.list('-created_date', undefined, { publicRead: true });
       const activeBanners = data.filter(banner => {
         try {
           return banner.active && 
